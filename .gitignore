@@ -1,0 +1,7 @@
+.env*
+.DS_Store
+.vercel/
+.netlify/
+node_modules/
+.claude/last-prompt.txt
+.claude/settings.local.json
