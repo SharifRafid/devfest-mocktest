@@ -275,19 +275,19 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 - [x] **Commit 6 (~T+70)** + push.
 
 ### Phase 7 — T+70 → T+80: screenshots + README (§6, Rulebook 9.2/9.3)
-- [ ] `screenshots/baseline.png` (R1, cost 7) and `screenshots/reroute-c2.png` (R1 with C2 blocked, cost 11), taken from the **live** site.
-- [ ] README contents:
-  - [ ] Name + registration number
-  - [ ] Live HTTPS link
-  - [ ] How to run: live link, `python3 -m http.server 8000`, `npm test`
-  - [ ] Main features (mapped to §3.2)
-  - [ ] Routing rules
-  - [ ] Bonus features
-  - [ ] Known issues/assumptions
-  - [ ] AI tools (Claude Code)
-  - [ ] Most useful prompt
-  - [ ] MIT note
-- [ ] **Commit 7 (~T+78)** + push.
+- [x] `screenshots/baseline.png` (R1, cost 7) and `screenshots/reroute-c2.png` (R1 with C2 blocked, cost 11), taken from the **live** site.
+- [x] README contents:
+  - [x] Name + registration number
+  - [x] Live HTTPS link
+  - [x] How to run: live link, `python3 -m http.server 8000`, `npm test`
+  - [x] Main features (mapped to §3.2)
+  - [x] Routing rules
+  - [x] Bonus features
+  - [x] Known issues/assumptions
+  - [x] AI tools (Claude Code)
+  - [x] Most useful prompt
+  - [x] MIT note
+- [x] **Commit 7 (~T+78)** + push.
 
 ### Phase 8 — T+80 → T+85: bonus (only if every core box is checked), then freeze
 - [ ] At most one stretch item, timeboxed to 5 min.
