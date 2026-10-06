@@ -29,8 +29,19 @@
           <span data-i18n="start.label">Starting location</span>
           <select id="startSelect" disabled></select>
         </label>
+        <div class="segmented" role="group" aria-label="Click mode">
+          <button type="button" class="seg" id="modeSelect" aria-pressed="true" data-i18n="mode.select">Select start</button>
+          <button type="button" class="seg" id="modeHazard" aria-pressed="false" data-i18n="mode.hazard">Toggle hazards</button>
+        </div>
+        <div class="actions">
+          <label class="btn btn-outline" for="fileInput"><span data-i18n="toolbar.upload">Upload JSON</span></label>
+          <input type="file" id="fileInput" accept=".json,application/json" hidden>
+          <button type="button" class="btn btn-outline" id="loadSample" data-i18n="toolbar.load_sample">Load sample</button>
+          <button type="button" class="btn btn-outline" id="resetBtn" data-i18n="toolbar.reset">Reset</button>
+        </div>
       </div>
-      <div class="map-scroll"><svg id="map" viewBox="0 0 1000 600" role="img" aria-label="Building map"></svg></div>
+      <div class="map-scroll" id="dropZone">
+        <div class="drop-overlay" data-i18n="drop.hint">Drop a building JSON file to load it</div><svg id="map" viewBox="0 0 1000 600" role="img" aria-label="Building map"></svg></div>
       <p class="hint" id="hint" data-i18n="hint.select">Click a room or junction on the map, or use the dropdown, to choose where to start.</p>
     </section>
 
@@ -50,6 +61,15 @@
       </section>
 
       <section class="card">
+        <h2 data-i18n="hazards.heading">Hazards</h2>
+        <div class="hazards">
+          <fieldset><legend data-i18n="hazards.nodes">Blocked rooms / junctions</legend><div id="hzNodes" class="checks"></div></fieldset>
+          <fieldset><legend data-i18n="hazards.edges">Blocked corridors</legend><div id="hzEdges" class="checks"></div></fieldset>
+          <fieldset><legend data-i18n="hazards.exits">Closed exits</legend><div id="hzExits" class="checks"></div></fieldset>
+        </div>
+      </section>
+
+      <section class="card">
         <h2 data-i18n="legend.heading">Legend</h2>
         <ul class="legend">
           <li><span class="sw sw-room"></span><span data-i18n="legend.room">Room</span></li>
@@ -58,6 +78,9 @@
           <li><span class="sw sw-start"></span><span data-i18n="legend.start">Start</span></li>
           <li><span class="sw sw-route"></span><span data-i18n="legend.route">Route</span></li>
           <li><span class="sw sw-cost">3</span><span data-i18n="legend.cost">Corridor cost</span></li>
+          <li><span class="sw sw-blocked">✕</span><span data-i18n="legend.blocked">Blocked</span></li>
+          <li><span class="sw sw-closed">🔒</span><span data-i18n="legend.closed">Closed exit</span></li>
+          <li><span class="sw sw-blocked-edge"></span><span data-i18n="legend.blocked_edge">Blocked corridor</span></li>
         </ul>
       </section>
     </aside>

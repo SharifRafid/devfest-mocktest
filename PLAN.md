@@ -234,26 +234,26 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 **Accept:** nodes appear at the supplied coordinates with readable labels, distinct types and visible costs. Selecting R1 shows cost 7.
 
 ### Phase 4 — T+45 → T+55: hazards, reset, upload (§3.2, §3.4)
-- [ ] Mode toggle (Select start / Toggle hazard). In hazard mode:
-  - [ ] room/junction click → block/unblock
-  - [ ] exit click → close/reopen
-  - [ ] edge click → block/unblock (edge clicks toggle in both modes)
-- [ ] Side checkbox lists, kept in sync with the map:
-  - [ ] Blocked rooms/junctions
-  - [ ] Blocked corridors (`L01 R1–C1 (2)`)
-  - [ ] Closed exits
-- [ ] Visual states:
-  - [ ] Blocked node: red + ✕
-  - [ ] Blocked edge: red dashed
-  - [ ] Closed exit: gray + lock
-  - [ ] Edges incident to a blocked node: dimmed
-- [ ] Every change runs `update()` synchronously.
-- [ ] Reset → `state = createState(graph)`; **keep the start**.
-- [ ] Upload: file input + drag-drop + "Load sample". Reject files > 1 MB.
-  - [ ] Valid upload: replaces the map, clears the start.
-  - [ ] Invalid upload: translated errors with paths; the old map stays.
-- [ ] Manually smoke-test all 5 §4.1 rows.
-- [ ] **Commit 4 (~T+55)** + push.
+- [x] Mode toggle (Select start / Toggle hazard). In hazard mode:
+  - [x] room/junction click → block/unblock
+  - [x] exit click → close/reopen
+  - [x] edge click → block/unblock (edge clicks toggle in both modes)
+- [x] Side checkbox lists, kept in sync with the map:
+  - [x] Blocked rooms/junctions
+  - [x] Blocked corridors (`L01 R1–C1 (2)`)
+  - [x] Closed exits
+- [x] Visual states:
+  - [x] Blocked node: red + ✕
+  - [x] Blocked edge: red dashed
+  - [x] Closed exit: gray + lock
+  - [x] Edges incident to a blocked node: dimmed
+- [x] Every change runs `update()` synchronously.
+- [x] Reset → `state = createState(graph)`; **keep the start**.
+- [x] Upload: file input + drag-drop + "Load sample". Reject files > 1 MB.
+  - [x] Valid upload: replaces the map, clears the start.
+  - [x] Invalid upload: translated errors with paths; the old map stays.
+- [x] Manually smoke-test all 5 §4.1 rows.
+- [x] **Commit 4 (~T+55)** + push.
 
 **Accept:** every §4.1 row reproduces in the UI, and Reset restores `initial_state`.
 
