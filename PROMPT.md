@@ -46,3 +46,7 @@ The reset button is not working, figure out why and fix it.
 ## 2026-10-06 06:35
 
 The note says both languages together regardless which is selected, fix this so that it only displays the selected language: Open via a local web server or the live site to auto-load the sample; upload still works.
+
+## 2026-10-06 06:37
+
+Continue phase 9 and finalize the project
