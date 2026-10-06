@@ -36,7 +36,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
   // Crop the viewBox to the drawing (+ room for node labels) so wide buildings don't leave empty bands.
   const xs = [...positions.values()].map((p) => p.x), ys = [...positions.values()].map((p) => p.y);
   const minX = Math.min(...xs) - 70, maxX = Math.max(...xs) + 70;
-  const minY = Math.min(...ys) - 50, maxY = Math.max(...ys) + 60;
+  const minY = Math.min(...ys) - 50, maxY = Math.max(...ys) + 66;
   const h = Math.max(maxY - minY, 220), w = Math.max(maxX - minX, 360);
   svg.setAttribute('viewBox', `${minX - (w - (maxX - minX)) / 2} ${minY - (h - (maxY - minY)) / 2} ${w} ${h}`);
   const { startId, lang, onNodeClick, onEdgeClick } = opts;
@@ -67,9 +67,9 @@ export function renderMap(svg, graph, positions, state, route, opts) {
 
     const m = midpoint(p, q);
     const text = String(e.cost);
-    const w = 14 + text.length * 8;
+    const w = 16 + text.length * 8;
     const pill = el('g', { class: `cost-pill${routeEdges.has(id) ? ' on-route' : ''}`, transform: `translate(${m.x} ${m.y})` }, gCosts);
-    el('rect', { x: -w / 2, y: -11, width: w, height: 22, rx: 11 }, pill);
+    el('rect', { x: -w / 2, y: -12, width: w, height: 24, rx: 12 }, pill);
     el('text', {}, pill).textContent = text;
     pill.style.pointerEvents = 'none';
   }
@@ -98,7 +98,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
       'aria-label': `${t(`node.type.${n.type}`, {}, lang)} ${id}: ${n.label}`,
     }, gNodes);
 
-    if (id === startId) el('circle', { class: `start-ring${anim.start ? ' ring-in' : ''}`, r: n.type === 'exit' ? 33 : 28 }, g);
+    if (id === startId) el('circle', { class: `start-ring${anim.start ? ' ring-in' : ''}`, r: n.type === 'exit' ? 35 : 29 }, g);
     nodeShape(n.type, g);
     if (state.blockedNodes.has(id)) {
       el('path', { class: 'mark', d: 'M-11,-11 L11,11 M11,-11 L-11,11' }, g);
@@ -108,7 +108,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
     } else {
       el('text', { class: 'node-id' }, g).textContent = id;
     }
-    const label = el('text', { class: 'node-label', y: n.type === 'exit' ? 40 : 36 }, g);
+    const label = el('text', { class: 'node-label', y: n.type === 'exit' ? 49 : 45 }, g);
     label.textContent = n.label;
 
     if (onNodeClick) {

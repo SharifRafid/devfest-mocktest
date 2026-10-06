@@ -17,7 +17,7 @@ Interactive evacuation route simulator built for the AI DevFest 2026 vibe-coding
   1. Run `npm run serve` (or `python3 -m http.server 8000`).
   2. Open http://localhost:8000.
 
-  Opening `index.html` directly via `file://` can't auto-load the sample, and the page shows a notice saying so. There is no build step and there are no dependencies: it is plain HTML, CSS and vanilla JS ES modules.
+  Opening `index.html` directly via `file://` doesn't work: Chrome blocks ES modules there, so the page only shows a notice (in the selected language) asking you to use the live site or a local server. There is no build step and there are no dependencies: it is plain HTML, CSS and vanilla JS ES modules.
 - **Tests:** `npm test` runs 106 `node:test` cases with no dependencies (Node 18+). They cover:
   - the router and its tie-breaks;
   - the validator;
@@ -68,6 +68,9 @@ Interactive evacuation route simulator built for the AI DevFest 2026 vibe-coding
 - Order of status checks: no start, then start blocked, then no route.
 
 ## Bonus features
+- **Export PNG**: downloads the current map with a header showing the building name, status and route (sequence, exit, cost).
+- Custom fonts: **Inter** (English) and **Hind Siliguri** (Bangla) from Google Fonts, with system fallbacks. Polished theme with AA-contrast colours, a map grid and a legend that matches the map's shapes exactly.
+- Reset always shows a confirmation message, so it's never a silent no-op.
 - Drag-and-drop upload, "Load sample", 1 MB upload limit.
 - Keyboard-accessible map nodes. Focus is kept across re-renders.
 - Responsive layout. On phones the map scrolls sideways inside its own box.

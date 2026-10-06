@@ -127,7 +127,7 @@ Required exact strings:
 | status.start_blocked | Starting location blocked | শুরুর স্থান অবরুদ্ধ |
 | status.select_start | Select a starting location | একটি শুরুর স্থান নির্বাচন করুন |
 | status.no_building | No building loaded — upload a JSON file | কোনো ভবন লোড হয়নি — একটি JSON ফাইল আপলোড করুন |
-| err.file_protocol | Open via a local web server or the live site to auto-load the sample; upload still works. | স্বয়ংক্রিয়ভাবে নমুনা লোড করতে লোকাল সার্ভার বা লাইভ সাইট ব্যবহার করুন; আপলোড কাজ করবে। |
+| err.file_protocol | This app can’t run from a local file. Open the live site, or run "npm run serve" and open http://localhost:8000. | অ্যাপটি লোকাল ফাইল থেকে চালানো যায় না। লাইভ সাইটটি খুলুন, অথবা "npm run serve" চালিয়ে http://localhost:8000 খুলুন। |
 
 Other keys to provide in both languages:
 - app title/subtitle, upload, load sample, reset, mode.select, mode.hazard, start label;
@@ -290,9 +290,9 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 - [x] **Commit 7 (~T+78)** + push.
 
 ### Phase 8 — T+80 → T+85: bonus (only if every core box is checked), then freeze
-- [ ] At most one stretch item, timeboxed to 5 min.
-- [ ] Run `npm test` again. Check `git status`; `git grep -iE "api[_-]?key|token|secret"` finds nothing.
-- [ ] **Final commit and push by T+85.**
+- [x] At most one stretch item, timeboxed to 5 min.
+- [x] Run `npm test` again. Check `git status`; `git grep -iE "api[_-]?key|token|secret"` finds nothing.
+- [x] **Final commit and push by T+85.**
 
 ### Phase 9 — T+85 → T+90: verify + submit (no code changes)
 - [ ] Open the live URL in an incognito Chrome window. Run all 5 §4.1 rows in EN and BN.

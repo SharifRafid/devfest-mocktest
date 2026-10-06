@@ -30,8 +30,8 @@ const REQUIRED = {
   'status.select_start': ['Select a starting location', 'একটি শুরুর স্থান নির্বাচন করুন'],
   'status.no_building': ['No building loaded — upload a JSON file', 'কোনো ভবন লোড হয়নি — একটি JSON ফাইল আপলোড করুন'],
   'err.file_protocol': [
-    'Open via a local web server or the live site to auto-load the sample; upload still works.',
-    'স্বয়ংক্রিয়ভাবে নমুনা লোড করতে লোকাল সার্ভার বা লাইভ সাইট ব্যবহার করুন; আপলোড কাজ করবে।',
+    'This app can’t run from a local file. Open the live site, or run "npm run serve" and open http://localhost:8000.',
+    'অ্যাপটি লোকাল ফাইল থেকে চালানো যায় না। লাইভ সাইটটি খুলুন, অথবা "npm run serve" চালিয়ে http://localhost:8000 খুলুন।',
   ],
 };
 

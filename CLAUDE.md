@@ -20,7 +20,7 @@ Source of truth: `PLAN.md` (module contracts, phases, checklists) and `EDGE_CASE
 - Plain HTML + CSS + vanilla JS **ES modules**. No build step, no npm dependencies, no frameworks, no CDN JS.
 - **Pure logic modules — no DOM, no fetch, no localStorage:** `js/validate.js`, `js/graph.js`, `js/router.js`, `js/geometry.js`, and `STRINGS`/`t()` in `js/i18n.js` (DOM helpers there guarded by `typeof document`). DOM lives only in `js/render.js` and `js/app.js`.
 - Follow the exact exports/signatures in PLAN.md §2 — the tests import them.
-- Load the default with **relative** `fetch('building.json', {cache:'no-cache'})` (never `/building.json`). **Upload + drag-drop must always work**, even if fetch fails or under `file://`.
+- Load the default with **relative** `fetch('building.json', {cache:'no-cache'})` (never `/building.json`). **Upload + drag-drop must always work** even if the fetch fails. Under `file://` Chrome blocks ES modules, so nothing runs; the classic-script notice in `index.html` (one language at a time) tells the user to use a server.
 - Render every dataset string with `textContent` / `createTextNode`. **Never `innerHTML` with data.**
 - Use **`Map`/`Set` for all id lookups** (ids like `__proto__`, `constructor` must work). Never `obj[id]`.
 - Validate fully before mutating app state. Invalid upload → show all errors (with paths, translated) and **keep the previous map**. Valid upload → replace graph, reset state from its `initial_state`, clear the start.

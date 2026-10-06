@@ -4,6 +4,7 @@ import { buildGraph, createState, toggleNode, toggleEdge, toggleExit } from './g
 import { findRoute } from './router.js';
 import { fitToViewBox } from './geometry.js';
 import { t } from './i18n.js';
+import { exportMapPng } from './export.js';
 import {
   renderMap, renderStartSelect, renderRoutePanel, renderStatus, renderErrors, renderHazardLists,
 } from './render.js';
@@ -27,6 +28,7 @@ const dom = {
   fileInput: $('fileInput'),
   loadSample: $('loadSample'),
   reset: $('resetBtn'),
+  exportPng: $('exportPng'),
   dropZone: $('dropZone'),
 };
 
@@ -189,6 +191,7 @@ function render() {
   dom.modeSelect.setAttribute('aria-pressed', String(store.mode === 'select'));
   dom.modeHazard.setAttribute('aria-pressed', String(store.mode === 'hazard'));
   dom.reset.disabled = !graph;
+  dom.exportPng.disabled = !graph;
   renderHazardLists(dom.hazards, graph, state, { onToggleNode, onToggleEdge, onToggleExit }, anim.changed);
   dom.buildingName.textContent = graph ? graph.building : '';
 
@@ -227,7 +230,14 @@ dom.modeHazard.addEventListener('click', () => setMode('hazard'));
 
 // Reset: restore the file's original initial_state; keep the selected start.
 dom.reset.addEventListener('click', () => {
-  if (store.graph) setState(createState(store.graph));
+  if (!store.graph) return;
+  const g = store.graph.initial;
+  const restored = g.blockedNodes.size + g.blockedEdges.size + g.closedExits.size;
+  // Always confirm, so Reset is never a silent no-op (e.g. when nothing was changed yet).
+  store.notice = restored
+    ? { key: 'reset.done_initial', params: { n: restored }, warn: false }
+    : { key: 'reset.done', params: {}, warn: false };
+  setState(createState(store.graph));
 });
 
 async function loadFile(file) {
@@ -250,6 +260,25 @@ dom.fileInput.addEventListener('change', async () => {
 });
 
 dom.loadSample.addEventListener('click', () => loadDefault());
+
+// Optional extension: download the current map + route summary as a PNG.
+dom.exportPng.addEventListener('click', async () => {
+  if (!store.graph) return;
+  const route = currentRoute();
+  const { lang } = store;
+  const lines = [t(`status.${route.status}`, {}, lang)];
+  if (route.status === 'ok') {
+    lines.push(`${t('route.sequence', {}, lang)}: ${route.path.join(' - ')}  ·  ${t('route.exit', {}, lang)}: ${route.exit}  ·  ${t('route.cost', {}, lang)}: ${route.cost}`);
+  }
+  const name = `smart-escape-${store.startId ?? 'map'}.png`;
+  try {
+    await exportMapPng(dom.map, { title: store.graph.building, lines, filename: name });
+    store.notice = { key: 'export.ok', params: { name }, warn: false };
+  } catch {
+    store.notice = { key: 'export.failed', params: {}, warn: true };
+  }
+  update();
+});
 
 // Drag and drop onto the map area.
 let dragDepth = 0;
@@ -285,6 +314,8 @@ async function loadDefault() {
 }
 
 async function boot() {
+  // If modules do run from file:// (some browsers allow it), the app works: drop the notice.
+  document.getElementById('fileWarning').hidden = true;
   store.lang = savedLang();
   applyStaticText();
   update();
