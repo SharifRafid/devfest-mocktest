@@ -179,39 +179,39 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 **Accept:** the skeleton page is in the repo and Pages is enabled.
 
 ### Phase 2 — T+12 → T+30: core logic + tests (§3.1, §3.3, §3.4, §4.1)
-- [ ] `validate.js` and `graph.js` per §2.
-- [ ] `router.js` per §2.
-- [ ] Router tests green:
-  - [ ] S1 baseline R1 → `R1,C1,C2,E1` cost 7
-  - [ ] S2 block C2 → `R1,C1,C3,C4,E2` cost 11 (beats the tied `R1,R2,C3,C4,E2`)
-  - [ ] S3 close E1+E2 → `no_route`
-  - [ ] S4 start R2 → `R2,C3,C4,E2` cost 7
-  - [ ] S5 R1 then block R1 → `start_blocked`
-  - [ ] T1 exit tie: E10 beats E2
-  - [ ] T2 predecessor trap → `S,A,Z,T`
-  - [ ] T3 exit id decided before the path → `S,B,E1`
-  - [ ] T4 cost, not hops
-  - [ ] T5 disconnected → `no_route`
-  - [ ] T6 block L03 → `R1,C1,C2,C4,E2` cost 10
-  - [ ] T7 closed exit as intermediate → `S,A,E2` cost 11
-  - [ ] T8 exits are terminal
-  - [ ] T10 unblock the start
-  - [ ] T11 reset restores a non-empty initial_state (deep clone)
-  - [ ] T12 start blocked in initial_state
-  - [ ] T13 all exits initially closed → reopen E1 → `R2,C3,C4,C2,E1` cost 10
-  - [ ] T14 E1 beats e1
-  - [ ] T15 R10 beats R2
-  - [ ] T16 a longer path wins when it is lex-smaller
-  - [ ] T17 start C3 → `C3,C4,E2` cost 5
-  - [ ] no_start for null, unknown or exit
-- [ ] Validate tests green:
-  - [ ] Valid inputs accepted: sample, sample with BOM, ids `__proto__`/`constructor`, extra fields.
-  - [ ] Bounds: 60/150 valid; 61 nodes, 151 edges, 0 edges, 1 node rejected.
-  - [ ] Full invalid-input list (EDGE_CASES.md §3).
-  - [ ] Multiple errors collected at once.
-  - [ ] Duplicate state ids deduped with a warning.
-- [ ] `npm test` green.
-- [ ] **Commit 2 by T+30.**
+- [x] `validate.js` and `graph.js` per §2.
+- [x] `router.js` per §2.
+- [x] Router tests green:
+  - [x] S1 baseline R1 → `R1,C1,C2,E1` cost 7
+  - [x] S2 block C2 → `R1,C1,C3,C4,E2` cost 11 (beats the tied `R1,R2,C3,C4,E2`)
+  - [x] S3 close E1+E2 → `no_route`
+  - [x] S4 start R2 → `R2,C3,C4,E2` cost 7
+  - [x] S5 R1 then block R1 → `start_blocked`
+  - [x] T1 exit tie: E10 beats E2
+  - [x] T2 predecessor trap → `S,A,Z,T`
+  - [x] T3 exit id decided before the path → `S,B,E1`
+  - [x] T4 cost, not hops
+  - [x] T5 disconnected → `no_route`
+  - [x] T6 block L03 → `R1,C1,C2,C4,E2` cost 10
+  - [x] T7 closed exit as intermediate → `S,A,E2` cost 11
+  - [x] T8 exits are terminal
+  - [x] T10 unblock the start
+  - [x] T11 reset restores a non-empty initial_state (deep clone)
+  - [x] T12 start blocked in initial_state
+  - [x] T13 all exits initially closed → reopen E1 → `R2,C3,C4,C2,E1` cost 10
+  - [x] T14 E1 beats e1
+  - [x] T15 R10 beats R2
+  - [x] T16 a longer path wins when it is lex-smaller
+  - [x] T17 start C3 → `C3,C4,E2` cost 5
+  - [x] no_start for null, unknown or exit
+- [x] Validate tests green:
+  - [x] Valid inputs accepted: sample, sample with BOM, ids `__proto__`/`constructor`, extra fields.
+  - [x] Bounds: 60/150 valid; 61 nodes, 151 edges, 0 edges, 1 node rejected.
+  - [x] Full invalid-input list (EDGE_CASES.md §3).
+  - [x] Multiple errors collected at once.
+  - [x] Duplicate state ids deduped with a warning.
+- [x] `npm test` green.
+- [x] **Commit 2 by T+30.**
 
 **Accept:** every §4.1 sample check and every §3.3 tie-break rule is proven in Node.
 

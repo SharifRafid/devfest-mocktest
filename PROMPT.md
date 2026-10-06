@@ -10,3 +10,7 @@ I'm currently participating in a vibe coding contest, read the rule book from @A
 ## 2026-10-06 05:59
 
 Yes, commit and push, make sure the commit message includes the initial prompt that I've given and also the changes made so far.
+
+## 2026-10-06 05:59
+
+start phase 2, implement the validator and router
