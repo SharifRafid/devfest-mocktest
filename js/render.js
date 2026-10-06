@@ -40,6 +40,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
   const h = Math.max(maxY - minY, 220), w = Math.max(maxX - minX, 360);
   svg.setAttribute('viewBox', `${minX - (w - (maxX - minX)) / 2} ${minY - (h - (maxY - minY)) / 2} ${w} ${h}`);
   const { startId, lang, onNodeClick, onEdgeClick } = opts;
+  const anim = opts.anim ?? { route: false, start: false, changed: new Set() };
   const onRoute = route.status === 'ok' ? new Set(route.path) : new Set();
   const routeEdges = route.status === 'ok' ? routeEdgeIds(graph, route.path) : new Set();
 
@@ -56,6 +57,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
     if (state.blockedEdges.has(id)) cls.push('blocked');
     if (state.blockedNodes.has(e.from) || state.blockedNodes.has(e.to)) cls.push('dimmed');
     if (routeEdges.has(id)) cls.push('on-route');
+    if (anim.changed.has(`e:${id}`)) cls.push('changed');
     const g = el('g', { class: cls.join(' '), 'data-id': id }, gEdges);
     el('line', { class: 'edge-line', x1: p.x, y1: p.y, x2: q.x, y2: q.y }, g);
     const hit = el('line', { class: 'edge-hit', x1: p.x, y1: p.y, x2: q.x, y2: q.y }, g);
@@ -74,7 +76,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
 
   if (route.status === 'ok') {
     const pts = route.path.map((nid) => positions.get(nid)).map((p) => `${p.x},${p.y}`).join(' ');
-    el('polyline', { class: 'route-line', points: pts, pathLength: 1 }, gRoute);
+    el('polyline', { class: `route-line${anim.route ? ' draw' : ''}`, points: pts, pathLength: 1 }, gRoute);
   }
 
   for (const id of graph.nodeIds) {
@@ -85,6 +87,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
     if (state.closedExits.has(id)) cls.push('closed');
     if (onRoute.has(id)) cls.push('on-route');
     if (id === startId) cls.push('is-start');
+    if (anim.changed.has(`n:${id}`)) cls.push('changed');
     const g = el('g', {
       class: cls.join(' '),
       transform: `translate(${p.x} ${p.y})`,
@@ -95,7 +98,7 @@ export function renderMap(svg, graph, positions, state, route, opts) {
       'aria-label': `${t(`node.type.${n.type}`, {}, lang)} ${id}: ${n.label}`,
     }, gNodes);
 
-    if (id === startId) el('circle', { class: 'start-ring', r: n.type === 'exit' ? 33 : 28 }, g);
+    if (id === startId) el('circle', { class: `start-ring${anim.start ? ' ring-in' : ''}`, r: n.type === 'exit' ? 33 : 28 }, g);
     nodeShape(n.type, g);
     if (state.blockedNodes.has(id)) {
       el('path', { class: 'mark', d: 'M-11,-11 L11,11 M11,-11 L-11,11' }, g);
@@ -182,12 +185,12 @@ export function renderErrors(container, errors, lang, max = 12) {
 }
 
 /** Checkbox lists for hazards; kept in sync with the map on every render. */
-export function renderHazardLists(els, graph, state, handlers) {
+export function renderHazardLists(els, graph, state, handlers, changed = new Set()) {
   for (const box of Object.values(els)) box.replaceChildren();
   if (!graph) return;
-  const chip = (box, extraCls, key, checked, text, title, onChange) => {
+  const chip = (box, extraCls, key, animKey, checked, text, title, onChange) => {
     const label = document.createElement('label');
-    label.className = `chk ${extraCls}`;
+    label.className = `chk ${extraCls}${changed.has(animKey) ? ' changed' : ''}`;
     label.title = title;
     const input = document.createElement('input');
     input.type = 'checkbox';
@@ -202,14 +205,14 @@ export function renderHazardLists(els, graph, state, handlers) {
   for (const id of graph.nodeIds) {
     const n = graph.nodes.get(id);
     if (n.type === 'exit') {
-      chip(els.exits, 'exit', `exit:${id}`, state.closedExits.has(id), id, n.label, () => handlers.onToggleExit(id));
+      chip(els.exits, 'exit', `exit:${id}`, `n:${id}`, state.closedExits.has(id), id, n.label, () => handlers.onToggleExit(id));
     } else {
-      chip(els.nodes, 'node', `chk-node:${id}`, state.blockedNodes.has(id), id, n.label, () => handlers.onToggleNode(id));
+      chip(els.nodes, 'node', `chk-node:${id}`, `n:${id}`, state.blockedNodes.has(id), id, n.label, () => handlers.onToggleNode(id));
     }
   }
   for (const id of graph.edgeIds) {
     const e = graph.edges.get(id);
-    chip(els.edges, 'edge', `edge:${id}`, state.blockedEdges.has(id), `${id} ${e.from}–${e.to} (${e.cost})`, id,
+    chip(els.edges, 'edge', `edge:${id}`, `e:${id}`, state.blockedEdges.has(id), `${id} ${e.from}–${e.to} (${e.cost})`, id,
       () => handlers.onToggleEdge(id));
   }
 }

@@ -241,3 +241,43 @@ body.mode-hazard #map .node, body.mode-hazard #map .edge-hit { cursor: crosshair
 @media (max-width: 900px) {
   .actions { margin-left: 0; }
 }
+
+/* ---------- Phase 6: brief, non-blocking animations (spec §4.2) ---------- */
+@keyframes route-draw {
+  from { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+  to { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+}
+@keyframes ring-in {
+  from { transform: scale(.55); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+@keyframes fade-in {
+  from { opacity: .35; transform: translateY(2px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes edge-in {
+  from { opacity: .25; }
+  to { opacity: 1; }
+}
+
+/* Dash values live only inside the keyframes, so with animations off the route is fully drawn. */
+.route-line.draw { animation: route-draw 280ms ease-out; }
+.start-ring { transform-box: fill-box; transform-origin: center; }
+.start-ring.ring-in { animation: ring-in 170ms ease-out; }
+.node .shape { transform-box: fill-box; transform-origin: center; }
+.node.changed .shape, .node.changed .mark, .node.changed .lock-body { transform-box: fill-box; transform-origin: center; animation: pop 200ms ease-out; }
+.edge.changed .edge-line { animation: edge-in 200ms ease-out; }
+.chk.changed { animation: pop 180ms ease-out; }
+.route.fade-in dd { animation: fade-in 200ms ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

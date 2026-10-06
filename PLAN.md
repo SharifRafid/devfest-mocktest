@@ -268,11 +268,11 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 - [x] **Commit 5 (~T+63)** + push.
 
 ### Phase 6 — T+63 → T+70: animation + polish (§4.2 required)
-- [ ] Route draw: `pathLength="1"`, dashoffset 1→0 over **250 ms**, only when the route key changes.
-- [ ] Start ring scale-in over 150 ms; hazard fill/stroke transition over 150–200 ms. Never block input; no flashing.
-- [ ] `prefers-reduced-motion` → no animation.
-- [ ] Legend complete. Panel stacks below 900 px. Disclaimer in the footer.
-- [ ] **Commit 6 (~T+70)** + push.
+- [x] Route draw: `pathLength="1"`, dashoffset 1→0 over **250 ms**, only when the route key changes.
+- [x] Start ring scale-in over 150 ms; hazard fill/stroke transition over 150–200 ms. Never block input; no flashing.
+- [x] `prefers-reduced-motion` → no animation.
+- [x] Legend complete. Panel stacks below 900 px. Disclaimer in the footer.
+- [x] **Commit 6 (~T+70)** + push.
 
 ### Phase 7 — T+70 → T+80: screenshots + README (§6, Rulebook 9.2/9.3)
 - [ ] `screenshots/baseline.png` (R1, cost 7) and `screenshots/reroute-c2.png` (R1 with C2 blocked, cost 11), taken from the **live** site.

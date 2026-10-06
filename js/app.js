@@ -20,6 +20,7 @@ const dom = {
   buildingName: $('buildingName'),
   langToggle: $('langToggle'),
   route: { seq: $('routeSeq'), exit: $('routeExit'), cost: $('routeCost') },
+  routePanel: $('routePanel'),
   hazards: { nodes: $('hzNodes'), edges: $('hzEdges'), exits: $('hzExits') },
   modeSelect: $('modeSelect'),
   modeHazard: $('modeHazard'),
@@ -129,12 +130,47 @@ export function update() {
   if (focusKey) document.querySelector(`[data-focus-key="${CSS.escape(focusKey)}"]`)?.focus();
 }
 
+// Previous render snapshot, used only to decide which brief animations to play.
+let prev = { graph: null, routeKey: '', startId: null, state: null };
+
+const diffSet = (a, b, prefix, out) => {
+  for (const id of a) if (!b.has(id)) out.add(prefix + id);
+  for (const id of b) if (!a.has(id)) out.add(prefix + id);
+};
+
+function animations(route) {
+  const routeKey = route.status === 'ok' ? route.path.join('\u0000') : '';
+  const sameGraph = prev.graph === store.graph;
+  const changed = new Set();
+  if (sameGraph && prev.state && store.state) {
+    diffSet(prev.state.blockedNodes, store.state.blockedNodes, 'n:', changed);
+    diffSet(prev.state.closedExits, store.state.closedExits, 'n:', changed);
+    diffSet(prev.state.blockedEdges, store.state.blockedEdges, 'e:', changed);
+  }
+  const anim = {
+    routeChanged: routeKey !== prev.routeKey,
+    route: routeKey !== '' && routeKey !== prev.routeKey,
+    start: store.startId !== null && store.startId !== prev.startId,
+    changed,
+  };
+  prev = { graph: store.graph, routeKey, startId: store.startId, state: store.state };
+  return anim;
+}
+
+function restartAnimation(node, cls) {
+  node.classList.remove(cls);
+  void node.offsetWidth; // reflow so the animation can replay
+  node.classList.add(cls);
+}
+
 function render() {
   const { graph, state, lang } = store;
   const route = currentRoute();
+  const anim = animations(route);
 
   renderStatus(dom.status, route.status, lang);
   renderRoutePanel(dom.route, route);
+  if (anim.routeChanged) restartAnimation(dom.routePanel, 'fade-in');
   renderStartSelect(dom.startSelect, graph, state ?? {}, store.startId, lang);
   renderErrors(dom.errors, store.loadErrors, lang);
   if (store.loadFailed && !store.loadErrors) {
@@ -153,7 +189,7 @@ function render() {
   dom.modeSelect.setAttribute('aria-pressed', String(store.mode === 'select'));
   dom.modeHazard.setAttribute('aria-pressed', String(store.mode === 'hazard'));
   dom.reset.disabled = !graph;
-  renderHazardLists(dom.hazards, graph, state, { onToggleNode, onToggleEdge, onToggleExit });
+  renderHazardLists(dom.hazards, graph, state, { onToggleNode, onToggleEdge, onToggleExit }, anim.changed);
   dom.buildingName.textContent = graph ? graph.building : '';
 
   if (graph) {
@@ -162,6 +198,7 @@ function render() {
       lang,
       onNodeClick,
       onEdgeClick: onToggleEdge, // corridors toggle in both modes
+      anim,
     });
   } else {
     dom.map.replaceChildren();
