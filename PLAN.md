@@ -258,14 +258,14 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 **Accept:** every §4.1 row reproduces in the UI, and Reset restores `initial_state`.
 
 ### Phase 5 — T+55 → T+63: Bangla/English (§3.2, Rulebook 5.6)
-- [ ] Fill in all of `STRINGS.bn`. `applyI18n` handles `data-i18n`, `data-i18n-aria` and `data-i18n-placeholder`.
-- [ ] Re-render dynamic text on a language change and set `<html lang>`.
-- [ ] Persist the language in localStorage (try/catch). Default to `en`.
-- [ ] `tests/i18n.test.mjs` green:
-  - [ ] en and bn have identical key sets.
-  - [ ] Every `err.*` validator code has a template.
-  - [ ] The 3 status strings are exact.
-- [ ] **Commit 5 (~T+63)** + push.
+- [x] Fill in all of `STRINGS.bn`. `applyI18n` handles `data-i18n`, `data-i18n-aria` and `data-i18n-placeholder`.
+- [x] Re-render dynamic text on a language change and set `<html lang>`.
+- [x] Persist the language in localStorage (try/catch). Default to `en`.
+- [x] `tests/i18n.test.mjs` green:
+  - [x] en and bn have identical key sets.
+  - [x] Every `err.*` validator code has a template.
+  - [x] The 3 status strings are exact.
+- [x] **Commit 5 (~T+63)** + push.
 
 ### Phase 6 — T+63 → T+70: animation + polish (§4.2 required)
 - [ ] Route draw: `pathLength="1"`, dashoffset 1→0 over **250 ms**, only when the route key changes.

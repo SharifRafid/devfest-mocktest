@@ -102,10 +102,24 @@ function currentRoute() {
   return r.status === 'no_start' ? { ...r, status: 'select_start' } : r;
 }
 
+const LANG_KEY = 'smartEscape.lang';
+
+function savedLang() {
+  try {
+    return localStorage.getItem(LANG_KEY) === 'bn' ? 'bn' : 'en';
+  } catch {
+    return 'en'; // storage blocked (private mode etc.)
+  }
+}
+
 function applyStaticText() {
   document.documentElement.lang = store.lang;
+  document.title = t('app.title', {}, store.lang);
   for (const node of document.querySelectorAll('[data-i18n]')) {
     node.textContent = t(node.dataset.i18n, {}, store.lang);
+  }
+  for (const node of document.querySelectorAll('[data-i18n-aria]')) {
+    node.setAttribute('aria-label', t(node.dataset.i18nAria, {}, store.lang));
   }
 }
 
@@ -162,6 +176,11 @@ dom.startSelect.addEventListener('change', () => {
 
 dom.langToggle.addEventListener('click', () => {
   store.lang = store.lang === 'en' ? 'bn' : 'en';
+  try {
+    localStorage.setItem(LANG_KEY, store.lang);
+  } catch {
+    // ignore: language still switches for this session
+  }
   applyStaticText();
   update();
 });
@@ -229,6 +248,7 @@ async function loadDefault() {
 }
 
 async function boot() {
+  store.lang = savedLang();
   applyStaticText();
   update();
   await loadDefault();
