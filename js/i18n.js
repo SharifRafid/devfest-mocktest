@@ -1,0 +1,79 @@
+// UI strings (pure) + translation helpers. Dataset labels are never translated.
+// Bangla (bn) is filled in Phase 5; until then t() falls back to English.
+
+export const STRINGS = {
+  en: {
+    'app.title': 'Smart Escape',
+    'app.subtitle': 'Interactive Evacuation Route Simulator',
+    'app.disclaimer': 'Educational simulation only — not a certified evacuation planning tool.',
+    'lang.toggle': 'বাংলা',
+    'start.label': 'Starting location',
+    'start.placeholder': '— choose a room or junction —',
+    'start.blocked_suffix': '(blocked)',
+    'status.no_building': 'No building loaded — upload a JSON file',
+    'status.select_start': 'Select a starting location',
+    'status.start_blocked': 'Starting location blocked',
+    'status.no_route': 'No route available',
+    'status.ok': 'Route found',
+    'status.loading': 'Loading building…',
+    'route.heading': 'Evacuation route',
+    'route.sequence': 'Route',
+    'route.exit': 'Exit',
+    'route.cost': 'Total cost',
+    'hint.exit_not_start': 'Exits cannot be a starting location — pick a room or junction.',
+    'hint.select': 'Click a room or junction on the map, or use the dropdown, to choose where to start.',
+    'legend.heading': 'Legend',
+    'legend.room': 'Room',
+    'legend.junction': 'Junction',
+    'legend.exit': 'Exit',
+    'legend.start': 'Start',
+    'legend.route': 'Route',
+    'legend.cost': 'Corridor cost',
+    'node.type.room': 'Room',
+    'node.type.junction': 'Junction',
+    'node.type.exit': 'Exit',
+    'load.failed': 'Could not load the default building.json.',
+    'load.invalid': 'Invalid file:',
+    'err.file_protocol': 'Open via a local web server or the live site to auto-load the sample; upload still works.',
+    'err.more': '+{n} more',
+    'err.json_parse': 'File is empty or not valid JSON ({message})',
+    'err.root_not_object': 'Top level must be a JSON object',
+    'err.building_invalid': 'Building name must be a non-empty string',
+    'err.nodes_not_array': 'nodes must be an array',
+    'err.nodes_count': 'Need 2–60 nodes (found {count})',
+    'err.node_not_object': 'Node must be an object',
+    'err.node_id_invalid': 'Node id must be a non-empty string',
+    'err.node_id_duplicate': 'Duplicate node id "{id}"',
+    'err.node_label_invalid': 'Node label must be a non-empty string',
+    'err.node_type_invalid': 'Node type must be room, junction or exit (found "{type}")',
+    'err.node_coord_invalid': 'Coordinate {axis} must be a finite number',
+    'err.need_room_or_junction': 'At least one room or junction is required',
+    'err.need_exit': 'At least one exit is required',
+    'err.edges_not_array': 'edges must be an array',
+    'err.edges_count': 'Need 1–150 edges (found {count})',
+    'err.edge_not_object': 'Edge must be an object',
+    'err.edge_id_invalid': 'Edge id must be a non-empty string',
+    'err.edge_id_duplicate': 'Duplicate edge id "{id}"',
+    'err.edge_endpoint_unknown': 'Unknown node id "{id}"',
+    'err.edge_self_loop': 'Self-loop on "{id}" is not allowed',
+    'err.edge_pair_duplicate': 'Repeated corridor between "{from}" and "{to}"',
+    'err.edge_cost_invalid': 'Cost must be a positive integer (found {cost})',
+    'err.initial_state_invalid': 'initial_state must be an object',
+    'err.state_array_invalid': 'Must be an array of ids',
+    'err.state_id_not_string': 'Id must be a string',
+    'err.state_unknown_id': 'Unknown id "{id}"',
+    'err.state_wrong_category': '"{id}" has the wrong type ({type}) for this list',
+  },
+  bn: {},
+};
+
+/** Translate key with {param} interpolation; falls back to English, then the key. */
+export function t(key, params = {}, lang = 'en') {
+  const table = STRINGS[lang] || STRINGS.en;
+  const template = table[key] ?? STRINGS.en[key] ?? key;
+  return template.replace(/\{(\w+)\}/g, (m, name) => (name in params ? String(params[name]) : m));
+}
+
+export function formatError(err, lang = 'en') {
+  return `${err.path}: ${t(`err.${err.code}`, err.params, lang)}`;
+}

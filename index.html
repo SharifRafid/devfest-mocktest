@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Escape</title>
+  <meta name="description" content="Interactive evacuation route simulator (educational).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1 data-i18n="app.title">Smart Escape</h1>
+      <p class="subtitle" data-i18n="app.subtitle">Interactive Evacuation Route Simulator</p>
+    </div>
+    <div class="building" id="buildingName"></div>
+    <button type="button" class="btn" id="langToggle" data-i18n="lang.toggle">বাংলা</button>
+  </header>
+
+  <div class="notice" id="fileWarning" hidden></div>
+
+  <main class="layout">
+    <section class="map-wrap">
+      <div class="controls">
+        <label class="field">
+          <span data-i18n="start.label">Starting location</span>
+          <select id="startSelect" disabled></select>
+        </label>
+      </div>
+      <div class="map-scroll"><svg id="map" viewBox="0 0 1000 600" role="img" aria-label="Building map"></svg></div>
+      <p class="hint" id="hint" data-i18n="hint.select">Click a room or junction on the map, or use the dropdown, to choose where to start.</p>
+    </section>
+
+    <aside class="panel">
+      <section class="card">
+        <div class="status" id="status" data-status="loading" role="status" aria-live="polite">Loading building…</div>
+        <div class="errors" id="errors" hidden></div>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="route.heading">Evacuation route</h2>
+        <dl class="route" id="routePanel">
+          <dt data-i18n="route.sequence">Route</dt><dd id="routeSeq">—</dd>
+          <dt data-i18n="route.exit">Exit</dt><dd id="routeExit">—</dd>
+          <dt data-i18n="route.cost">Total cost</dt><dd id="routeCost">—</dd>
+        </dl>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="legend.heading">Legend</h2>
+        <ul class="legend">
+          <li><span class="sw sw-room"></span><span data-i18n="legend.room">Room</span></li>
+          <li><span class="sw sw-junction"></span><span data-i18n="legend.junction">Junction</span></li>
+          <li><span class="sw sw-exit"></span><span data-i18n="legend.exit">Exit</span></li>
+          <li><span class="sw sw-start"></span><span data-i18n="legend.start">Start</span></li>
+          <li><span class="sw sw-route"></span><span data-i18n="legend.route">Route</span></li>
+          <li><span class="sw sw-cost">3</span><span data-i18n="legend.cost">Corridor cost</span></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer" data-i18n="app.disclaimer">Educational simulation only — not a certified evacuation planning tool.</footer>
+
+  <script>
+    // Classic script: module scripts and fetch don't work from file:// in Chrome.
+    if (location.protocol === 'file:') {
+      var w = document.getElementById('fileWarning');
+      w.hidden = false;
+      w.textContent = 'Open via a local web server or the live site to auto-load the sample; upload still works. / ' +
+        'স্বয়ংক্রিয়ভাবে নমুনা লোড করতে লোকাল সার্ভার বা লাইভ সাইট ব্যবহার করুন; আপলোড কাজ করবে।';
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

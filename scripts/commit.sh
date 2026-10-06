@@ -54,6 +54,6 @@ if git diff --cached --quiet; then
   echo "Nothing to commit." >&2
   exit 1
 fi
-git commit -m "$SUMMARY" -m "$BODY"
+git commit -m "$SUMMARY" -m "$BODY" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 git push || git push -u origin "$(git rev-parse --abbrev-ref HEAD)"
 echo "Committed $(git rev-parse --short HEAD)"

@@ -216,20 +216,20 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 **Accept:** every §4.1 sample check and every §3.3 tie-break rule is proven in Node.
 
 ### Phase 3 — T+30 → T+45: map rendering + start selection (§3.2)
-- [ ] `geometry.js` + T20 tests: identical points, negative and huge coordinates.
-- [ ] `render.js` map, drawn in layers: edges → cost pills → route → nodes → labels.
-  - [ ] Edges: visible line plus a transparent hit line (`stroke-width:16; pointer-events:stroke`).
-  - [ ] Cost pills at edge midpoints.
-  - [ ] Node shapes: room = rounded square, junction = circle, exit = larger green shape.
-  - [ ] Labels: ID + label with a halo.
-  - [ ] Nodes: `tabindex=0`, `role=button`, `aria-label`, Enter/Space.
-- [ ] Boot with `fetch('building.json', {cache:'no-cache'})` (**relative path**). If it fails, show a message; upload still works.
-- [ ] Start `<select>` lists rooms and junctions only. Clicking a node in Select mode sets the start; exits are ignored with a hint.
-- [ ] Route panel: `R1 - C1 - C2 - E1`, exit `E1`, total cost `7`.
-- [ ] Status precedence: no_building → select_start → start_blocked → no_route → ok.
-- [ ] Start ring + thick route highlight.
-- [ ] Verify the live Pages URL.
-- [ ] **Commit 3 (~T+45)** + push.
+- [x] `geometry.js` + T20 tests: identical points, negative and huge coordinates.
+- [x] `render.js` map, drawn in layers: edges → cost pills → route → nodes → labels.
+  - [x] Edges: visible line plus a transparent hit line (`stroke-width:16; pointer-events:stroke`).
+  - [x] Cost pills at edge midpoints.
+  - [x] Node shapes: room = rounded square, junction = circle, exit = larger green shape.
+  - [x] Labels: ID + label with a halo.
+  - [x] Nodes: `tabindex=0`, `role=button`, `aria-label`, Enter/Space.
+- [x] Boot with `fetch('building.json', {cache:'no-cache'})` (**relative path**). If it fails, show a message; upload still works.
+- [x] Start `<select>` lists rooms and junctions only. Clicking a node in Select mode sets the start; exits are ignored with a hint.
+- [x] Route panel: `R1 - C1 - C2 - E1`, exit `E1`, total cost `7`.
+- [x] Status precedence: no_building → select_start → start_blocked → no_route → ok.
+- [x] Start ring + thick route highlight.
+- [x] Verify the live Pages URL.
+- [x] **Commit 3 (~T+45)** + push.
 
 **Accept:** nodes appear at the supplied coordinates with readable labels, distinct types and visible costs. Selecting R1 shows cost 7.
 
