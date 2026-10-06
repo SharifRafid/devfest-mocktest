@@ -160,21 +160,21 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 ## 3. Timeline and checklists
 
 ### Phase 1 — T+0 → T+12: read, ask, scaffold, deploy the skeleton
-- [ ] Read the problem fully.
-- [ ] Ask the organizers by T+15 (planned answer in brackets):
+- [x] Read the problem fully.
+- [ ] Ask the organizers by T+15 (n/a in the mock test; planned answers were used and documented in README → Known issues):
   - [ ] Duplicate ids in `initial_state`: reject or dedupe? (dedupe + warn)
   - [ ] Is "lexicographic sequence" element-wise with code-unit order? (yes)
   - [ ] Can a blocked node be chosen as the start? (dropdown disables it; a start that becomes blocked shows the message)
   - [ ] Are string-typed numbers invalid? (yes)
-- [ ] `index.html` skeleton:
-  - [ ] header: title + EN/বাংলা toggle
-  - [ ] toolbar: Upload, Load sample, Reset, mode toggle, start select
-  - [ ] `<svg viewBox="0 0 1000 600">`
-  - [ ] side panel, status bar, route panel, legend, error box
-  - [ ] Noto Sans Bengali `<link>` with a fallback font stack
-- [ ] **Classic** inline `<script>` guard: `if (location.protocol === 'file:')` → show the `err.file_protocol` text in both languages.
-- [ ] Commit 1 + push → enable Pages: `gh api -X POST repos/{owner}/{repo}/pages -f "source[branch]=main" -f "source[path]=/"` (or Settings → Pages).
-- [ ] Check `https://<user>.github.io/<repo>/` (the first build takes 1–2 min).
+- [x] `index.html` skeleton:
+  - [x] header: title + EN/বাংলা toggle
+  - [x] toolbar: Upload, Load sample, Reset, mode toggle, start select
+  - [x] `<svg viewBox="0 0 1000 600">`
+  - [x] side panel, status bar, route panel, legend, error box
+  - [x] Bangla font `<link>` with a fallback font stack (final: Inter + Hind Siliguri)
+- [x] **Classic** inline `<script>` guard: `if (location.protocol === 'file:')` → show the `err.file_protocol` text (final: one language at a time, switchable).
+- [x] Commit 1 + push → enable Pages: `gh api -X POST repos/{owner}/{repo}/pages -f "source[branch]=main" -f "source[path]=/"` (or Settings → Pages).
+- [x] Check `https://<user>.github.io/<repo>/` (the first build takes 1–2 min).
 
 **Accept:** the skeleton page is in the repo and Pages is enabled.
 
@@ -295,9 +295,9 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 - [x] **Final commit and push by T+85.**
 
 ### Phase 9 — T+85 → T+90: verify + submit (no code changes)
-- [ ] Open the live URL in an incognito Chrome window. Run all 5 §4.1 rows in EN and BN.
-- [ ] `gh api repos/{o}/{r}/pages/builds/latest --jq .commit` == `git rev-parse HEAD`.
-- [ ] If Pages isn't live by T+87, run `netlify deploy --prod --dir .` **before T+90** and submit that link.
+- [x] Open the live URL in an incognito Chrome window. Run all 5 §4.1 rows in EN and BN.
+- [x] `gh api repos/{o}/{r}/pages/builds/latest --jq .commit` == `git rev-parse HEAD`.
+- [x] (Not needed: Pages was live.) If Pages isn't live by T+87, run `netlify deploy --prod --dir .` **before T+90** and submit that link.
 - [ ] Submit the form: name, registration number, repo URL, final commit (7+ chars), live HTTPS link.
 - [ ] Log out of all accounts.
 
@@ -319,17 +319,17 @@ renderErrors(el, errors, lang, max=12)      // "+N more"
 
 ## 5. Stretch / bonus (only after Phases 1–7 are all checked)
 - [ ] High-contrast toggle (`body.hc`, saved to localStorage).
-- [ ] PNG export: SVG → Image → canvas → `toBlob` → download (inline the computed styles first).
+- [x] PNG export: SVG → Image → canvas → `toBlob` → download (inline the computed styles first).
 - [ ] Save progress: `{lang, startId, blocked sets, datasetHash}` in localStorage; restore only when the hash matches.
 - [ ] Alternative routes: the best route to each other reachable exit, with its cost.
 - [ ] Walkthrough: Prev/Next stepping that shows the running cost.
 
 ## 6. Final pre-submission checklist
-- [ ] `npm test` green. No `console.error` on the live site.
-- [ ] The live HTTPS URL opens without login, auto-loads the sample, and selecting R1 shows cost 7.
-- [ ] All 5 §4.1 rows pass on the live site in EN and BN.
-- [ ] Invalid upload → errors shown and the old map remains. Valid upload → start cleared.
-- [ ] Reset restores `initial_state` and keeps the start.
-- [ ] README has all 9 items. LICENSE is MIT. Both screenshots exist.
-- [ ] No secrets. History not rewritten. ≥3 commits, each with a Prompt or Manual edit line.
+- [x] `npm test` green. No `console.error` on the live site.
+- [x] The live HTTPS URL opens without login, auto-loads the sample, and selecting R1 shows cost 7.
+- [x] All 5 §4.1 rows pass on the live site in EN and BN.
+- [x] Invalid upload → errors shown and the old map remains. Valid upload → start cleared.
+- [x] Reset restores `initial_state` and keeps the start.
+- [x] README has all 9 items. LICENSE is MIT. Both screenshots exist.
+- [x] No secrets. History not rewritten. ≥3 commits, each with a Prompt or Manual edit line.
 - [ ] Final commit pushed before T+90. Deployed commit == HEAD. Form submitted.
